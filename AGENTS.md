@@ -77,3 +77,30 @@ A skill is a set of local instructions to follow that is stored in a `SKILL.md` 
   - Avoid deep reference-chasing: prefer opening only files directly linked from `SKILL.md` unless you're blocked.
   - When variants exist (frameworks, providers, domains), pick only the relevant reference file(s) and note that choice.
 - Safety and fallback: If a skill can't be applied cleanly (missing files, unclear instructions), state the issue, pick the next-best approach, and continue.
+
+## Additional shared instructions (propagated from user custom instructions)
+- All referenced assets must be kept as offline assets for immediate no-network setup.
+- Write test suites using Playwright to test UI and capture screenshot previews for each screen when UI exists.
+- When changing or creating a UI/view, provide screenshot previews.
+- Run linters and formatters after writing code; if a lint issue cannot be fixed, write it in `AGENT_NOTES.md`.
+- Ensure project-level files exist: `DESIGN.md`, `README.md`, `CHANGELOG.md`, and `NOTES.md`.
+- `CHANGELOG.md` entries should include semantic versioning and timestamps in GMT+3.
+
+### Flask-only reminder
+Use Flask module organization:
+
+```text
+app/
+<module_1>/
+<module_2>/
+...
+static/<module_1>/
+static/<module_2>/
+templates/<module_1>/
+templates/<module_2>/
+
+static/vendors/<vendor_name>/
+```
+
+### AI-only reminder
+- Display graphs for training loss, performance, and related information verbosely.

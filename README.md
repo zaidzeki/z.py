@@ -1,6 +1,6 @@
 # z
 
-A minimal Python package scaffold.
+A minimal Python package scaffold with bundling, storage, crypto, and image CLI helpers.
 
 ## Quick start
 
@@ -8,6 +8,27 @@ A minimal Python package scaffold.
 pip install -e .
 pytest
 ```
+
+## CLI: `zi image`
+
+Use Pillow-backed conversion with format, quality, and optimization flags:
+
+```bash
+zi image \
+  --input ./input.png \
+  --output ./output.webp \
+  --format webp \
+  --quality 82 \
+  --optimize
+```
+
+Arguments:
+
+- `--input/-i` input filepath
+- `--output/-o` output filepath
+- `--format/-f` target format (`webp`, `jpg`, `png`, `gif`, ...)
+- `--quality` output quality (`1..100`)
+- `--optimize` enable Pillow optimization when supported
 
 ## Bundle mode
 
@@ -54,4 +75,4 @@ Available modes:
 - `FAST-MODE`: `[len_IV][IV][len_cipher_text][cipher_text][rest_cleartext]`
 - `FULL-MODE`: `[len_IV][IV][cipher_text]`
 - `PQC-MODE`: KEM + AES-GCM (uses `qclib` backend when available, or custom backend injection)
-- `PIPELINE-MODE`: public-key wrapped AES key + metadata + optional padding
+- `PIPELINE-MODE`: public-key wrapped AES key + metadata + optional payload padding

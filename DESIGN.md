@@ -1,5 +1,15 @@
 # DESIGN
 
+## CLI image conversion
+
+`zi image` is a thin Pillow wrapper intended for local/offline conversion:
+
+- Input and output paths are explicit (`--input`, `--output`).
+- Format normalization is handled via aliases (`jpg` -> `JPEG`, etc.).
+- Quality is validated in the range `1..100`.
+- `--optimize` is passed through to Pillow's save options.
+- JPEG conversion auto-converts alpha-bearing modes to RGB for compatibility.
+
 ## Bundle mode format
 
 Each file entry is written sequentially as:
