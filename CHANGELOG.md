@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.6.0 - 2026-03-29 18:30:30 GMT+3
+- Added `zi` CLI entrypoint with new `image` subcommand for Pillow-based format conversion.
+- Added support for `--input/-i`, `--output/-o`, `--format/-f`, `--quality`, and `--optimize` options.
+- Added automated tests for successful conversion and unsupported format handling.
+- Added `NOTES.md` and refreshed project documentation for image CLI usage.
+
 ## 0.5.0 - 2026-03-29 12:05:00 GMT+3
 - Added new `z.crypto` module with FAST, FULL, PQC, and PIPELINE encryption/decryption helpers.
 - Added tests for all crypto modes including hybrid encryption padding behavior.
