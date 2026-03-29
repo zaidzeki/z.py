@@ -2,6 +2,7 @@
 
 from .bundle import bundle, unbundle
 from .core import greet
+from .image import process_image
 from .crypto import (
     decrypt_fast,
     decrypt_full,
@@ -17,6 +18,7 @@ from .store import Store
 __all__ = [
     "Store",
     "bundle",
+    "process_image",
     "decrypt_fast",
     "decrypt_full",
     "decrypt_pipeline",

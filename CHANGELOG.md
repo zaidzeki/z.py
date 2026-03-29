@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 0.6.0 - 2026-03-29 12:45:00 GMT+3
+- Added `zi image` CLI for image conversion, quality adjustments, and optimization.
+- Added `z.image` module with `process_image` helper using PIL.
+- Exported `process_image` from package root.
+- Registered `zi` entry point for command-line access.
+- Added runtime dependency on `Pillow`.
+
 ## 0.5.0 - 2026-03-29 12:05:00 GMT+3
 - Added new `z.crypto` module with FAST, FULL, PQC, and PIPELINE encryption/decryption helpers.
 - Added tests for all crypto modes including hybrid encryption padding behavior.
