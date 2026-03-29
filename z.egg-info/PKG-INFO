@@ -1,3 +1,13 @@
+Metadata-Version: 2.4
+Name: z
+Version: 0.6.0
+Summary: Starter z package
+Author: z contributors
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: pycryptodome>=3.20.0
+Requires-Dist: Pillow>=10.0.0
+
 # z
 
 A minimal Python package scaffold.
@@ -7,20 +17,6 @@ A minimal Python package scaffold.
 ```bash
 pip install -e .
 pytest
-```
-
-## CLI (`zi`)
-
-```bash
-zi image --input photo.png --output photo.webp --format webp --quality 80 --optimize
-```
-
-## Image processing
-
-```python
-from z import process_image
-
-process_image("input.jpg", "output.webp", img_format="webp", quality=85, optimize=True)
 ```
 
 ## Bundle mode

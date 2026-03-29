@@ -1,5 +1,14 @@
 # DESIGN
 
+## Image Processing
+
+`z.image.process_image` uses `Pillow` to handle image operations. It supports:
+- Format conversion (e.g., PNG to WebP).
+- Quality setting for lossy formats.
+- File-level optimization during save.
+
+The `zi` CLI provides an entry point for these operations via the `image` subcommand.
+
 ## Bundle mode format
 
 Each file entry is written sequentially as:

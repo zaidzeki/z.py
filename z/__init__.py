@@ -12,6 +12,7 @@ from .crypto import (
     encrypt_pipeline,
     encrypt_pqc,
 )
+from .image import process_image
 from .store import Store
 
 __all__ = [
@@ -26,5 +27,6 @@ __all__ = [
     "encrypt_pipeline",
     "encrypt_pqc",
     "greet",
+    "process_image",
     "unbundle",
 ]
