@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "z"
+version = "0.1.0"
+description = "Starter z package"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "z contributors" }]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["z*"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
