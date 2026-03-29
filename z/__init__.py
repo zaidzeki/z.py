@@ -2,5 +2,6 @@
 
 from .bundle import bundle, unbundle
 from .core import greet
+from .store import Store
 
-__all__ = ["bundle", "greet", "unbundle"]
+__all__ = ["Store", "bundle", "greet", "unbundle"]
