@@ -20,6 +20,19 @@ unbundle("archive.zb", "./out")
 
 For directory paths, pass `recursively=True`.
 
+## Image processing
+
+```python
+from z import process_image
+
+process_image("input.png", "output.webp", img_format="webp", quality=80, optimize=True)
+```
+
+CLI usage:
+```bash
+zi image -i input.png -o output.webp -f webp --quality 80 --optimize
+```
+
 ## Namespaced store
 
 ```python

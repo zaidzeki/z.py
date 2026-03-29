@@ -27,3 +27,12 @@ Dict-like indexing is also available for convenience (`store[namespace]`, `store
 - `PIPELINE-MODE`: `[len_metadata][metadata_json][len_wrapped_key][wrapped_aes_key][len_IV][IV][len_ciphertext][ciphertext][len_padding][padding]`
 
 `PIPELINE-MODE` supports optional deterministic outer payload size (`pad_to_size`) to reduce length leakage.
+
+## Image processing
+
+The `z.image` module uses `Pillow` to handle common image manipulations:
+- Format conversion (e.g., JPEG to WebP).
+- Quality adjustment (for lossy formats).
+- Storage optimization (saving with `optimize=True`).
+
+The `zi` CLI provides a convenient entry point for these operations via the `image` subcommand.

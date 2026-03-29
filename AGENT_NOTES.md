@@ -6,3 +6,6 @@
 - Added `z.store.Store` with namespaced SHA-256 keyed records and JSON persistence.
 - Added dict-like indexing support to `Store` via `__getitem__`, `__setitem__`, and `__delitem__`.
 - Added `z.crypto` with four encryption modes: FAST, FULL, PQC (backend-injected), and PIPELINE (hybrid RSA+AES with optional payload padding).
+- Added `z.image.process_image` and `zi image` CLI for image processing (format, quality, optimization).
+- Integrated `Pillow` for image handling.
+- Bumped version to `0.6.0`.
