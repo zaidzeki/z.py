@@ -35,3 +35,23 @@ assert payload["name"] == "alpha"
 ```
 
 Records are keyed by deterministic SHA-256 hashes of canonical JSON payloads.
+
+## `z.crypto` modes
+
+```python
+from z.crypto import encrypt_fast, decrypt_fast, encrypt_full, decrypt_full
+
+key = b"k" * 32
+payload = encrypt_fast(b"video-bytes", key, chunk_size=1024)
+assert decrypt_fast(payload, key) == b"video-bytes"
+
+blob = encrypt_full(b"plain-text", key)
+assert decrypt_full(blob, key) == b"plain-text"
+```
+
+Available modes:
+
+- `FAST-MODE`: `[len_IV][IV][len_cipher_text][cipher_text][rest_cleartext]`
+- `FULL-MODE`: `[len_IV][IV][cipher_text]`
+- `PQC-MODE`: KEM + AES-GCM (uses `qclib` backend when available, or custom backend injection)
+- `PIPELINE-MODE`: public-key wrapped AES key + metadata + optional padding
