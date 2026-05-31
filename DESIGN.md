@@ -37,3 +37,17 @@ Dict-like indexing is also available for convenience (`store[namespace]`, `store
 - `PIPELINE-MODE`: `[len_metadata][metadata_json][len_wrapped_key][wrapped_aes_key][len_IV][IV][len_ciphertext][ciphertext][len_padding][padding]`
 
 `PIPELINE-MODE` supports optional deterministic outer payload size (`pad_to_size`) to reduce length leakage.
+
+## Streaming AES-CTR (Fast) Mode
+
+`z.aes_fast` provides a stream-based encryption mode using AES-256-CTR with a single SHA3-512 key derivation function (KDF).
+Layout:
+- `MAGIC`: 4 bytes (`FAST`)
+- `NONCE`: 8 bytes (used as CTR mode nonce)
+- `CIPHERTEXT`: remaining bytes processed in 256 KB chunks
+
+Security Notes:
+- No ciphertext authenticity (no MAC/malleable ciphertext).
+- No KDF work factor (weak passwords can be brute-forced easily).
+- Ideal for performance-critical or memory-constrained scenarios where obfuscation or basic confidentiality suffices.
+

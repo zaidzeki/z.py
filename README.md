@@ -30,6 +30,17 @@ Arguments:
 - `--quality` output quality (`1..100`)
 - `--optimize` enable Pillow optimization when supported
 
+## CLI: `zi encrypt-fast` & `zi decrypt-fast`
+
+Ultra-fast, low-memory AES-256-CTR streaming file encryption:
+
+```bash
+zi encrypt-fast -i large_file.bin -o large_file.enc -p password
+zi decrypt-fast -i large_file.enc -o large_file.out -p password
+```
+
+Omit the `-p` parameter to be securely prompted for the password.
+
 ## Bundle mode
 
 ```python
@@ -76,3 +87,18 @@ Available modes:
 - `FULL-MODE`: `[len_IV][IV][cipher_text]`
 - `PQC-MODE`: KEM + AES-GCM (uses `qclib` backend when available, or custom backend injection)
 - `PIPELINE-MODE`: public-key wrapped AES key + metadata + optional payload padding
+
+## Streaming encryption (low-memory)
+
+For large files, use `encrypt_stream` and `decrypt_stream` with a file-like interface:
+
+```python
+from z import encrypt_stream, decrypt_stream
+
+with open("large.bin", "rb") as fin, open("large.enc", "wb") as fout:
+    encrypt_stream(fin, fout, "securepassword")
+
+with open("large.enc", "rb") as fin, open("large.dec", "wb") as fout:
+    decrypt_stream(fin, fout, "securepassword")
+```
+

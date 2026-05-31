@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.7.0 - 2026-05-31 15:35:00 GMT+3
+- Added `z.aes_fast` providing ultra-fast, low-memory streaming AES-256-CTR encryption and decryption.
+- Exposed `encrypt_stream`, `decrypt_stream`, and `derive_key` APIs at package root.
+- Integrated `encrypt-fast` and `decrypt-fast` commands into the `zi` CLI.
+- Added comprehensive unit and integration CLI tests.
+
 ## 0.6.0 - 2026-03-29 18:30:30 GMT+3
 - Added `zi` CLI entrypoint with new `image` subcommand for Pillow-based format conversion.
 - Added support for `--input/-i`, `--output/-o`, `--format/-f`, `--quality`, and `--optimize` options.

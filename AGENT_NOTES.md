@@ -9,3 +9,5 @@
 - Added `zi image` CLI command (`z.cli`) with Pillow conversion, quality validation, optimize flag, and JPEG RGB fallback.
 - Added CLI tests for successful WEBP conversion and unsupported format validation.
 - Introduced `NOTES.md` for persistent cross-agent project context as requested.
+- Integrated ultra-fast streaming AES-256-CTR encryption under `z.aes_fast` and exposed it in `zi` CLI as `encrypt-fast` and `decrypt-fast` subcommands. Bumped version to `0.7.0`.
+

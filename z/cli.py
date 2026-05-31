@@ -96,6 +96,20 @@ def build_parser() -> argparse.ArgumentParser:
         help="enable format optimizer when supported",
     )
 
+    enc_parser = subparsers.add_parser(
+        "encrypt-fast", help="encrypt a file using ultra-fast AES-256-CTR"
+    )
+    enc_parser.add_argument("--input", "-i", required=True, help="plaintext input file")
+    enc_parser.add_argument("--output", "-o", required=True, help="ciphertext output file")
+    enc_parser.add_argument("--password", "-p", help="password (omit to prompt)")
+
+    dec_parser = subparsers.add_parser(
+        "decrypt-fast", help="decrypt a file using ultra-fast AES-256-CTR"
+    )
+    dec_parser.add_argument("--input", "-i", required=True, help="ciphertext input file")
+    dec_parser.add_argument("--output", "-o", required=True, help="plaintext output file")
+    dec_parser.add_argument("--password", "-p", help="password (omit to prompt)")
+
     return parser
 
 
@@ -113,6 +127,57 @@ def main(argv: list[str] | None = None) -> int:
             optimize=args.optimize,
         )
         print(f"Saved converted image: {output}")
+        return 0
+
+    if args.command in ("encrypt-fast", "decrypt-fast"):
+        import getpass
+        import logging
+        import os
+        from .aes_fast import encrypt_stream, decrypt_stream
+
+        logger = logging.getLogger("aes_fast")
+        if not logger.handlers:
+            handler = logging.StreamHandler()
+            formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
+            handler.setFormatter(formatter)
+            logger.addHandler(handler)
+            logger.setLevel(logging.INFO)
+
+        try:
+            input_path = os.path.abspath(args.input)
+            output_path = os.path.abspath(args.output)
+            if input_path == output_path:
+                logger.error("Input and output files must be different to prevent data truncation.")
+                return 1
+        except Exception as exc:
+            logger.error(f"Failed to resolve file paths: {exc}")
+            return 1
+
+        password = args.password
+        if not password:
+            password = getpass.getpass("Password: ")
+            if not password:
+                logger.error("Empty password is not allowed.")
+                return 1
+            if args.command == "encrypt-fast":
+                confirm = getpass.getpass("Confirm password: ")
+                if password != confirm:
+                    logger.error("Passwords do not match.")
+                    return 1
+
+        try:
+            if args.command == "encrypt-fast":
+                with open(args.input, "rb") as fin, open(args.output, "wb") as fout:
+                    encrypt_stream(fin, fout, password)
+            else:
+                with open(args.input, "rb") as fin, open(args.output, "wb") as fout:
+                    decrypt_stream(fin, fout, password)
+        except OSError as exc:
+            logger.error(f"I/O error: {exc}")
+            return 2
+        except ValueError as exc:
+            logger.error(f"Decryption / Header integrity error: {exc}")
+            return 3
         return 0
 
     parser.error(f"Unknown command: {args.command}")
