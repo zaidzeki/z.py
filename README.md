@@ -102,3 +102,17 @@ with open("large.enc", "rb") as fin, open("large.dec", "wb") as fout:
     decrypt_stream(fin, fout, "securepassword")
 ```
 
+## FTPS Client (`SlimShadyFTP`)
+
+Use the context manager to handle FTPS connections with automatic authentication, encryption, and shutdown:
+
+```python
+from z import SlimShadyFTP
+
+# Upload, list, and delete files securely
+with SlimShadyFTP() as client:
+    client.upload('test.txt')
+    client.list_files()
+    client.delete('test.txt')
+```
+

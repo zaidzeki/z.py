@@ -51,3 +51,10 @@ Security Notes:
 - No KDF work factor (weak passwords can be brute-forced easily).
 - Ideal for performance-critical or memory-constrained scenarios where obfuscation or basic confidentiality suffices.
 
+## FTPS Client Integration
+
+`z.ftp.ZFTP` is a context manager wrapper around `ftplib.FTP_TLS`:
+- Supports parameter overrides for host, user, passwd, remote_dir, timeout, and ssl_version, defaulting to connection configurations.
+- Calls `.auth()` and `.prot_p()` upon entering the context to establish secure TLS data channel connection, then logs in and directories to `remote_dir`.
+- Exposes standard file operations: `upload`, `download`, `list_files`, `delete`, `mkdir`, `rmdir`, and `rename`.
+- Safely terminates connections during block exit by calling `quit()` or falling back to `close()`.

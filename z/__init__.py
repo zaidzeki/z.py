@@ -13,9 +13,11 @@ from .crypto import (
     encrypt_pipeline,
     encrypt_pqc,
 )
+from .ftp import ZFTP
 from .store import Store
 
 __all__ = [
+    "ZFTP",
     "Store",
     "bundle",
     "decrypt_fast",

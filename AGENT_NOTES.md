@@ -10,4 +10,5 @@
 - Added CLI tests for successful WEBP conversion and unsupported format validation.
 - Introduced `NOTES.md` for persistent cross-agent project context as requested.
 - Integrated ultra-fast streaming AES-256-CTR encryption under `z.aes_fast` and exposed it in `zi` CLI as `encrypt-fast` and `decrypt-fast` subcommands. Bumped version to `0.7.0`.
+- Integrated `SlimShadyFTP` client with full FTPS support and context manager lifecycle hooks, exposing it from package root. Bumped version to `0.8.0`.
 

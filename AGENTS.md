@@ -8,6 +8,7 @@
 ## General Instructions
 ### Rules
 - Any explicit instruction given in a message to overwrite a rule here must be respected.
+- Do not hardcode or commit any credentials, passwords, or secrets in the source code.
 - Run linters and formatters after writing code.
 - If you can't fix a lint issue write it in the `AGENT_NOTES.md`.
 - Use semantic versioning and increase the version number whenever you make changes.

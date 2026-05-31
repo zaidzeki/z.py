@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.8.0 - 2026-05-31 16:30:00 GMT+3
+- Integrated `z.ftp.ZFTP` context manager for secure and complete FTPS interactions.
+- Exported `ZFTP` at package root.
+- Added comprehensive mocked FTPS unit tests.
+
 ## 0.7.0 - 2026-05-31 15:35:00 GMT+3
 - Added `z.aes_fast` providing ultra-fast, low-memory streaming AES-256-CTR encryption and decryption.
 - Exposed `encrypt_stream`, `decrypt_stream`, and `derive_key` APIs at package root.
