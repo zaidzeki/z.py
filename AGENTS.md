@@ -11,6 +11,7 @@
 - Do not hardcode or commit any credentials, passwords, or secrets in the source code.
 - Run linters and formatters after writing code.
 - If you can't fix a lint issue write it in the `AGENT_NOTES.md`.
+- Always write multi-line commit messages when committing changes.
 - Use semantic versioning and increase the version number whenever you make changes.
   - `<major>.<minor>.<patch>`
   - Simple fixes get a patch increase.
