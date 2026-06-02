@@ -9,6 +9,32 @@ pip install -e .
 pytest
 ```
 
+## CLI: `zi bundles` & `zi unbundle`
+
+Create highly optimized compressed and split bundles:
+
+```bash
+zi bundles \
+  ./backup.zb \
+  ./src ./docs \
+  --max-size 10M \
+  --compression gzip \
+  --split true
+```
+
+And extract them:
+
+```bash
+zi unbundle ./backup.zb --output ./extracted
+```
+
+Arguments for `bundles`:
+- `<bundle-name>` output archive path
+- `<files & folder>` paths to include
+- `--max-size` maximum size limit for each bundle part (e.g., `10M`, `500K`, `200`)
+- `--compression` choices: `gzip`, `xz`, `br`, `none` (default)
+- `--split` whether to split files across part boundaries (`true`/`false`)
+
 ## CLI: `zi image`
 
 Use Pillow-backed conversion with format, quality, and optimization flags:
@@ -50,7 +76,7 @@ bundle(["a.txt", "b.txt"], "archive.zb")
 unbundle("archive.zb", "./out")
 ```
 
-For directory paths, pass `recursively=True`.
+For directory/recursive bundle flows, the package defaults to directory validation rules.
 
 ## Namespaced store
 
@@ -115,4 +141,3 @@ with SlimShadyFTP() as client:
     client.list_files()
     client.delete('test.txt')
 ```
-

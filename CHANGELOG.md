@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.9.0 - 2026-06-02 14:44:00 GMT+3
+- Added binary bundle format version 1 (`ZBDL`) supporting high-density compression.
+- Supported standard library compression (`gzip`, `xz`/`lzma`) and custom optional `br` (`brotli`).
+- Implemented size parsing supporting convenient units (e.g., `10M`, `500K`).
+- Engineered advanced file-splitting across bundle boundaries with skip/push and sole-file fallbacks.
+- Exposed CLI `zi bundles` and `zi unbundle` commands.
+- Extended test coverage with split-boundary validation.
+
 ## 0.8.0 - 2026-05-31 16:30:00 GMT+3
 - Integrated `z.ftp.ZFTP` context manager for secure and complete FTPS interactions.
 - Exported `ZFTP` at package root.

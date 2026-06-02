@@ -1,11 +1,9 @@
 # BACKLOG
 
-## P0: Bundle Versioning & Compression
-- **Goal**: Implement bundle format v1 with built-in compression.
+## P0: Namespace Views
+- **Goal**: Design a lightweight `NamespaceView` object.
 - **Details**:
-  - Since the library has not been used yet, there is no need for backward compatibility with v0.
-  - Integrate standard library compression (e.g., `zlib` or `bz2`).
-  - Prepend a version/compression header at the start of the bundle file.
+  - Provide clean mutable mapping semantics per namespace.
 
 ## P1: Secure Streaming Encryption (`aes_secure`)
 - **Goal**: Create a secure streaming encryption alternative to the fast-mode obfuscation.
@@ -16,8 +14,6 @@
 ## P2: Store & Crypto Improvements
 - **Optimistic File-locking for `Store`**:
   - Implement file-level locks during `Store.save()` to prevent concurrent write corruption.
-- **Namespace Views**:
-  - Design a lightweight `NamespaceView` object to provide clean mutable mapping semantics per namespace.
 - **File-based Streaming APIs for `z.crypto`**:
   - Add streaming versions of the core `z.crypto` algorithms (FAST, FULL, PIPELINE, PQC) to handle large files efficiently without loading them entirely in memory.
 

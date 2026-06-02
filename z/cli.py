@@ -110,6 +110,31 @@ def build_parser() -> argparse.ArgumentParser:
     dec_parser.add_argument("--output", "-o", required=True, help="plaintext output file")
     dec_parser.add_argument("--password", "-p", help="password (omit to prompt)")
 
+    bundles_parser = subparsers.add_parser(
+        "bundles", help="bundle files into compression-enabled v1 bundles"
+    )
+    bundles_parser.add_argument("bundle_name", help="name of the bundle output file")
+    bundles_parser.add_argument("paths", nargs="+", help="files and/or folders to bundle")
+    bundles_parser.add_argument("--max-size", help="maximum size limit for each bundle part (e.g. 10M, 500K)")
+    bundles_parser.add_argument(
+        "--compression",
+        choices=["gzip", "xz", "br", "none"],
+        default="none",
+        help="compression method to use (default: none)"
+    )
+    bundles_parser.add_argument(
+        "--split",
+        choices=["true", "false"],
+        default="true",
+        help="whether to split files across bundles (default: true)"
+    )
+
+    unbundle_parser = subparsers.add_parser(
+        "unbundle", help="extract a bundle into an output directory"
+    )
+    unbundle_parser.add_argument("bundle_name", help="name of the bundle file to extract")
+    unbundle_parser.add_argument("--output", "-o", required=True, help="output directory for extraction")
+
     return parser
 
 
@@ -179,6 +204,55 @@ def main(argv: list[str] | None = None) -> int:
             logger.error(f"Decryption / Header integrity error: {exc}")
             return 3
         return 0
+
+    if args.command == "bundles":
+        import logging
+        logger = logging.getLogger("bundle")
+        if not logger.handlers:
+            handler = logging.StreamHandler()
+            formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
+            handler.setFormatter(formatter)
+            logger.addHandler(handler)
+            logger.setLevel(logging.INFO)
+
+        try:
+            from .bundle import bundle
+            split_bool = (args.split.lower() == "true")
+
+            output_paths = bundle(
+                filepaths=args.paths,
+                output_path=args.bundle_name,
+                recursively=True,
+                max_size=args.max_size,
+                compression=args.compression,
+                split=split_bool,
+            )
+            print("Bundling successful. Created files:")
+            for p in output_paths:
+                print(f" - {p}")
+            return 0
+        except Exception as exc:
+            logger.error(f"Bundling failed: {exc}")
+            return 1
+
+    if args.command == "unbundle":
+        import logging
+        logger = logging.getLogger("unbundle")
+        if not logger.handlers:
+            handler = logging.StreamHandler()
+            formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
+            handler.setFormatter(formatter)
+            logger.addHandler(handler)
+            logger.setLevel(logging.INFO)
+
+        try:
+            from .bundle import unbundle
+            extracted_paths = unbundle(args.bundle_name, args.output)
+            print(f"Extraction successful. Extracted {len(extracted_paths)} files to '{args.output}'.")
+            return 0
+        except Exception as exc:
+            logger.error(f"Extraction failed: {exc}")
+            return 1
 
     parser.error(f"Unknown command: {args.command}")
     return 2
