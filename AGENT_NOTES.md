@@ -12,3 +12,4 @@
 - Integrated ultra-fast streaming AES-256-CTR encryption under `z.aes_fast` and exposed it in `zi` CLI as `encrypt-fast` and `decrypt-fast` subcommands.
 - Integrated `SlimShadyFTP` client with full FTPS support and context manager lifecycle hooks.
 - Upgraded binary bundle implementation to format version 1 (`ZBDL`), introducing sequential multi-part files, Gzip/XZ/Brotli compression, and chunk-splitting boundary constraints.
+- Integrated `z.ratelimit` sliding-window rate limiter; `limit` decorator is thread-safe using a single lock per wrapped function; `delay_duration` accepts both float and `"Xs"` string forms.

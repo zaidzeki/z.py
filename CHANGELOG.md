@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 0.10.0 - 2026-06-06 11:41:00 GMT+3
+- Added `z.ratelimit` module with sliding-window `limit` decorator and `RateLimitExceeded` exception.
+- Supports `cphs` (0.5 s), `cpm` (60 s), `cph` (3 600 s), `cpd` (86 400 s), `cpw` (604 800 s) windows.
+- Implemented thread-safe call-history eviction with a single `threading.Lock`.
+- `delay=True` mode sleeps and retries; `delay=False` mode silently returns `None` or raises on breach.
+- `delay_duration` accepts both `float` and string forms like `"0.5s"`.
+- Exported `limit` and `RateLimitExceeded` at package root.
+- Added comprehensive test suite: basic limits, sliding-window behaviour, delay mode, thread safety, and metadata preservation.
+
 ## 0.9.0 - 2026-06-02 14:44:00 GMT+3
 - Added binary bundle format version 1 (`ZBDL`) supporting high-density compression.
 - Supported standard library compression (`gzip`, `xz`/`lzma`) and custom optional `br` (`brotli`).

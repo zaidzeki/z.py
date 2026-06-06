@@ -1,5 +1,7 @@
 """Top-level package for ``z``."""
 
+from .ratelimit import RateLimitExceeded, limit
+
 from .aes_fast import decrypt_stream, derive_key, encrypt_stream
 from .bundle import bundle, unbundle
 from .core import greet
@@ -17,6 +19,7 @@ from .ftp import ZFTP
 from .store import Store
 
 __all__ = [
+    "RateLimitExceeded",
     "ZFTP",
     "Store",
     "bundle",
@@ -32,5 +35,6 @@ __all__ = [
     "encrypt_pqc",
     "encrypt_stream",
     "greet",
+    "limit",
     "unbundle",
 ]
