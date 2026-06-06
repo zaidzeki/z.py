@@ -30,6 +30,7 @@ def compress_data(data: bytes, method: str) -> bytes:
     elif method == "br":
         try:
             import brotli
+
             return brotli.compress(data)
         except ImportError as exc:
             raise ImportError(
@@ -64,6 +65,7 @@ def decompress_data(data: bytes, method: str) -> bytes:
     elif method == "br":
         try:
             import brotli
+
             return brotli.decompress(data)
         except ImportError as exc:
             raise ImportError(
@@ -109,7 +111,7 @@ def parse_size(size_val: int | str | None) -> int | None:
 
     for unit, mult in multipliers.items():
         if size_str.endswith(unit):
-            num_part = size_str[:-len(unit)].strip()
+            num_part = size_str[: -len(unit)].strip()
             try:
                 return int(float(num_part) * mult)
             except ValueError:
@@ -247,12 +249,9 @@ def _read_bundle_file(path: Path) -> tuple[str, list[dict]]:
         payload = data[cursor : cursor + data_len]
         cursor += data_len
 
-        entries.append({
-            "path": rel_path,
-            "flags": flags,
-            "part_index": part_index,
-            "data": payload
-        })
+        entries.append(
+            {"path": rel_path, "flags": flags, "part_index": part_index, "data": payload}
+        )
 
     return compression_method, entries
 
@@ -331,12 +330,14 @@ def bundle(
     for source_path, relative_path in collected:
         raw_data = source_path.read_bytes()
         compressed_data = compress_data(raw_data, normalized_compression)
-        queue.append({
-            "path": relative_path,
-            "data": compressed_data,
-            "part_index": 0,
-            "is_split_mode": False
-        })
+        queue.append(
+            {
+                "path": relative_path,
+                "data": compressed_data,
+                "part_index": 0,
+                "is_split_mode": False,
+            }
+        )
 
     bundles: list[list[dict]] = []
     current_bundle: list[dict] = []
@@ -350,7 +351,9 @@ def bundle(
         is_split_mode = item["is_split_mode"] or (part_index > 0)
 
         needed_full = (7 if not is_split_mode else 11) + len(path_bytes) + len(data)
-        remaining_space = limit_bytes - current_bundle_size if limit_bytes is not None else float("inf")
+        remaining_space = (
+            limit_bytes - current_bundle_size if limit_bytes is not None else float("inf")
+        )
 
         if needed_full <= remaining_space:
             entry = {
@@ -358,7 +361,7 @@ def bundle(
                 "path_bytes": path_bytes,
                 "data": data,
                 "flags": 0x03 if is_split_mode else 0x00,
-                "part_index": part_index if is_split_mode else None
+                "part_index": part_index if is_split_mode else None,
             }
             current_bundle.append(entry)
             current_bundle_size += needed_full
@@ -385,7 +388,7 @@ def bundle(
                 "path_bytes": path_bytes,
                 "data": chunk_data,
                 "flags": 0x01,
-                "part_index": part_index
+                "part_index": part_index,
             }
             current_bundle.append(entry)
             current_bundle_size += split_entry_header_size + len(chunk_data)
@@ -416,7 +419,7 @@ def bundle(
                     "path_bytes": f_path_bytes,
                     "data": fit_item["data"],
                     "flags": 0x00,
-                    "part_index": None
+                    "part_index": None,
                 }
                 current_bundle.append(entry)
                 current_bundle_size += 7 + len(f_path_bytes) + len(fit_item["data"])
@@ -430,7 +433,7 @@ def bundle(
                         "path_bytes": f_path_bytes,
                         "data": first_item["data"],
                         "flags": 0x00,
-                        "part_index": None
+                        "part_index": None,
                     }
                     current_bundle.append(entry)
                     current_bundle_size += 7 + len(f_path_bytes) + len(first_item["data"])

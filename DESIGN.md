@@ -58,3 +58,11 @@ Security Notes:
 - Calls `.auth()` and `.prot_p()` upon entering the context to establish secure TLS data channel connection, then logs in and directories to `remote_dir`.
 - Exposes standard file operations: `upload`, `download`, `list_files`, `delete`, `mkdir`, `rmdir`, and `rename`.
 - Safely terminates connections during block exit by calling `quit()` or falling back to `close()`.
+
+## Hash-Based File Deletion
+
+`z.clean.remove_files_by_hash` recursively scans a directory path:
+- Computes hashes of file contents in 64 KB chunks to support large files without consuming high memory.
+- Uses dynamic hash algorithms via `hashlib.new(algo)` (e.g., `sha1`, `sha256`, `md5`).
+- Matches computed hashes against a provided list of target hashes and unlinks matching files.
+

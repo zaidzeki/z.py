@@ -1,5 +1,6 @@
 """Top-level package for ``z``."""
 
+from .clean import remove_files_by_hash
 from .filetree import FileStructureGenerator, generate_tree
 from .ratelimit import RateLimitExceeded, limit
 
@@ -39,5 +40,6 @@ __all__ = [
     "generate_tree",
     "greet",
     "limit",
+    "remove_files_by_hash",
     "unbundle",
 ]

@@ -166,6 +166,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="additional entry names to ignore (space-separated)",
     )
 
+    clean_parser = subparsers.add_parser("clean", help="remove files by hash")
+    clean_parser.add_argument("--algo", default="sha256", help="hash algorithm (default: sha256)")
+    clean_parser.add_argument("--hashes", nargs="+", required=True, help="list of hashes to delete")
+    clean_parser.add_argument("--path", default=".", help="directory to search (default: current)")
+
     return parser
 
 
@@ -305,6 +310,13 @@ def main(argv: list[str] | None = None) -> int:
                 args.path, max_depth=args.depth, include_hidden=args.hidden, ignore_list=ignore_list
             )
         )
+        return 0
+
+    if args.command == "clean":
+        from .clean import remove_files_by_hash
+
+        target_hashes = set(h.lower() for h in args.hashes)
+        remove_files_by_hash(args.algo, target_hashes, args.path)
         return 0
 
     parser.error(f"Unknown command: {args.command}")

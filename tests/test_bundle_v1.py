@@ -84,22 +84,23 @@ def test_cli_bundles_and_unbundle(tmp_path: Path) -> None:
 
     archive = tmp_path / "cli_archive.zb"
 
-    ret_pack = main([
-        "bundles",
-        str(archive),
-        str(file_a),
-        "--max-size", "100K",
-        "--compression", "gzip",
-        "--split", "true"
-    ])
+    ret_pack = main(
+        [
+            "bundles",
+            str(archive),
+            str(file_a),
+            "--max-size",
+            "100K",
+            "--compression",
+            "gzip",
+            "--split",
+            "true",
+        ]
+    )
     assert ret_pack == 0
     assert archive.exists()
 
     extract_dir = tmp_path / "cli_extract"
-    ret_unpack = main([
-        "unbundle",
-        str(archive),
-        "--output", str(extract_dir)
-    ])
+    ret_unpack = main(["unbundle", str(archive), "--output", str(extract_dir)])
     assert ret_unpack == 0
     assert (extract_dir / "hello.txt").read_text(encoding="utf-8") == "CLI test"

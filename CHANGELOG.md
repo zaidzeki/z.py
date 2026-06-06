@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.12.0 - 2026-06-06 14:38:00 GMT+3
+- Added `z.clean` module containing the `remove_files_by_hash` function to recursively clean files matching a set of hashes.
+- Exposed `clean` subcommand in `zi` CLI parser.
+- Added comprehensive unit tests in `tests/test_clean.py`.
+- Bumped version `0.11.0` → `0.12.0`.
+
 ## 0.11.0 - 2026-06-06 12:29:00 GMT+3
 - Added `z.filetree` module with `FileStructureGenerator` class and `generate_tree` convenience function.
 - Renders Unicode directory trees with `├──` / `└──` connectors and `│` continuation lines.

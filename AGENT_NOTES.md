@@ -13,3 +13,4 @@
 - Integrated `SlimShadyFTP` client with full FTPS support and context manager lifecycle hooks.
 - Upgraded binary bundle implementation to format version 1 (`ZBDL`), introducing sequential multi-part files, Gzip/XZ/Brotli compression, and chunk-splitting boundary constraints.
 - Integrated `z.ratelimit` sliding-window rate limiter; `limit` decorator is thread-safe using a single lock per wrapped function; `delay_duration` accepts both float and `"Xs"` string forms.
+- Added `z.clean.remove_files_by_hash` file cleanup module with support for multiple algorithms (e.g., SHA-1, SHA-256) and exposed it under the `zi clean` subcommand.
