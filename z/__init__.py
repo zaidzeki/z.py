@@ -1,5 +1,6 @@
 """Top-level package for ``z``."""
 
+from .filetree import FileStructureGenerator, generate_tree
 from .ratelimit import RateLimitExceeded, limit
 
 from .aes_fast import decrypt_stream, derive_key, encrypt_stream
@@ -19,6 +20,7 @@ from .ftp import ZFTP
 from .store import Store
 
 __all__ = [
+    "FileStructureGenerator",
     "RateLimitExceeded",
     "ZFTP",
     "Store",
@@ -34,6 +36,7 @@ __all__ = [
     "encrypt_pipeline",
     "encrypt_pqc",
     "encrypt_stream",
+    "generate_tree",
     "greet",
     "limit",
     "unbundle",

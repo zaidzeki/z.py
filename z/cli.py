@@ -115,25 +115,56 @@ def build_parser() -> argparse.ArgumentParser:
     )
     bundles_parser.add_argument("bundle_name", help="name of the bundle output file")
     bundles_parser.add_argument("paths", nargs="+", help="files and/or folders to bundle")
-    bundles_parser.add_argument("--max-size", help="maximum size limit for each bundle part (e.g. 10M, 500K)")
+    bundles_parser.add_argument(
+        "--max-size", help="maximum size limit for each bundle part (e.g. 10M, 500K)"
+    )
     bundles_parser.add_argument(
         "--compression",
         choices=["gzip", "xz", "br", "none"],
         default="none",
-        help="compression method to use (default: none)"
+        help="compression method to use (default: none)",
     )
     bundles_parser.add_argument(
         "--split",
         choices=["true", "false"],
         default="true",
-        help="whether to split files across bundles (default: true)"
+        help="whether to split files across bundles (default: true)",
     )
 
     unbundle_parser = subparsers.add_parser(
         "unbundle", help="extract a bundle into an output directory"
     )
     unbundle_parser.add_argument("bundle_name", help="name of the bundle file to extract")
-    unbundle_parser.add_argument("--output", "-o", required=True, help="output directory for extraction")
+    unbundle_parser.add_argument(
+        "--output", "-o", required=True, help="output directory for extraction"
+    )
+
+    tree_parser = subparsers.add_parser("tree", help="display a Unicode directory tree")
+    tree_parser.add_argument(
+        "path",
+        nargs="?",
+        default=".",
+        help="root directory to visualise (default: current directory)",
+    )
+    tree_parser.add_argument(
+        "--depth",
+        "-d",
+        type=int,
+        default=None,
+        metavar="N",
+        help="maximum depth (omit for unlimited)",
+    )
+    tree_parser.add_argument(
+        "--hidden",
+        action="store_true",
+        help="include hidden files and directories",
+    )
+    tree_parser.add_argument(
+        "--ignore",
+        nargs="*",
+        metavar="NAME",
+        help="additional entry names to ignore (space-separated)",
+    )
 
     return parser
 
@@ -207,6 +238,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "bundles":
         import logging
+
         logger = logging.getLogger("bundle")
         if not logger.handlers:
             handler = logging.StreamHandler()
@@ -217,7 +249,8 @@ def main(argv: list[str] | None = None) -> int:
 
         try:
             from .bundle import bundle
-            split_bool = (args.split.lower() == "true")
+
+            split_bool = args.split.lower() == "true"
 
             output_paths = bundle(
                 filepaths=args.paths,
@@ -237,6 +270,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "unbundle":
         import logging
+
         logger = logging.getLogger("unbundle")
         if not logger.handlers:
             handler = logging.StreamHandler()
@@ -247,12 +281,31 @@ def main(argv: list[str] | None = None) -> int:
 
         try:
             from .bundle import unbundle
+
             extracted_paths = unbundle(args.bundle_name, args.output)
-            print(f"Extraction successful. Extracted {len(extracted_paths)} files to '{args.output}'.")
+            print(
+                f"Extraction successful. Extracted {len(extracted_paths)} files to '{args.output}'."
+            )
             return 0
         except Exception as exc:
             logger.error(f"Extraction failed: {exc}")
             return 1
+
+    if args.command == "tree":
+        from .filetree import FileStructureGenerator
+
+        ignore_list = list(FileStructureGenerator._DEFAULT_IGNORE)
+        if args.ignore:
+            ignore_list.extend(args.ignore)
+
+        from .filetree import generate_tree
+
+        print(
+            generate_tree(
+                args.path, max_depth=args.depth, include_hidden=args.hidden, ignore_list=ignore_list
+            )
+        )
+        return 0
 
     parser.error(f"Unknown command: {args.command}")
     return 2

@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 0.11.0 - 2026-06-06 12:29:00 GMT+3
+- Added `z.filetree` module with `FileStructureGenerator` class and `generate_tree` convenience function.
+- Renders Unicode directory trees with `├──` / `└──` connectors and `│` continuation lines.
+- Supports `max_depth`, `include_hidden`, and a configurable `ignore_list` (default ignores `.git`, `__pycache__`, `.DS_Store`, `node_modules`).
+- Directories sorted before files; entries sorted case-insensitively within each group.
+- Handles `PermissionError` gracefully with an inline `[Permission Denied]` marker.
+- Exported `FileStructureGenerator` and `generate_tree` at package root.
+- Added `zi tree [path] [--depth N] [--hidden] [--ignore NAME…]` CLI subcommand.
+- Added `tests/test_filetree.py` with 23 tests covering root line, entry listing, connectors, depth limiting, hidden-file control, custom ignore lists, permission errors, and class-API idempotence.
+- Bumped version `0.10.0` → `0.11.0`.
+
 ## 0.10.0 - 2026-06-06 11:41:00 GMT+3
 - Added `z.ratelimit` module with sliding-window `limit` decorator and `RateLimitExceeded` exception.
 - Supports `cphs` (0.5 s), `cpm` (60 s), `cph` (3 600 s), `cpd` (86 400 s), `cpw` (604 800 s) windows.
